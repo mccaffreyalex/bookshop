@@ -22,7 +22,7 @@ server.get('/', (req, res, next) => {
 })
 
 server.post('/', restify.serveStatic({
-    'directory: ./index',
+    'directory: './index',
     'default': 'index.html'
 }))
 

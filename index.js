@@ -15,14 +15,14 @@ const status = {
     added: 201,
     badRequest: 400
 }
-const defaultPort = 80
+const defaultPort = 8080
 
 server.get('/', (req, res, next) => {
     res.redirect('/books', next)
 })
 
 server.post('/', restify.serveStatic({
-    'directory: './index',
+    'directory': './index',
     'default': 'index.html'
 }))
 

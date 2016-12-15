@@ -82,7 +82,7 @@ server.post('/accounts', (req, res) => {
     })
 })
  
-var secret = "book";
+
  
 function payload(req, res, next) {
     getRawBody(req, {

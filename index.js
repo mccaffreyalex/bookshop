@@ -23,10 +23,6 @@ server.get('/', (req, res, next) => {
     res.redirect('/books', next)
 })
 
-// server.post('/', restify.serveStatic({
-//     'directory': './index',
-//     'default': 'index.html'
-// }))
 
 /**
  * @api {get} /books Request a list of available books

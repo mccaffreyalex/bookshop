@@ -3,6 +3,8 @@
 
 const restify = require('restify')
 const server = restify.createServer()
+const crypto = require('crypto') 
+const secret = 'book'
 
 server.use(restify.fullResponse())
 server.use(restify.bodyParser())
@@ -83,6 +85,41 @@ server.post('/accounts', (req, res) => {
         res.end()
     })
 })
+ 
+var secret = "book";
+ 
+function payload(req, res, next) {
+    getRawBody(req, {
+        length: req.headers['content-length'],
+        limit: '2mb',
+        encoding: 'utf-8'
+    }, function (err, string) {
+        if (err)
+            return next(err);
+        console.log('body parsed');
+        var github_signature = req.headers['x-hub-signature'];
+        if (!string) {
+            console.log('no body');
+            res.send('no body');
+            next();
+        }
+        var my = my_signature(string);
+        if (github_signature == my) {
+            // do other job, for example pull data from your repo with shelljs        
+        }
+        console.log('Signatures didn\'t match');
+        next();
+    });
+}
+ 
+function my_signature(payload_body) {
+    return "sha1=" + crypto.createHmac('sha1', secret).update(JSON.stringify(payload_body)).digest('hex');
+}
+ 
+
+ 
+server.post('/payload', payload);
+
 
 const port = process.env.PORT || defaultPort
 
